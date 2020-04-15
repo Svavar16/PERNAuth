@@ -1,0 +1,21 @@
+{
+	"name": "pernauth",
+	"version": "1.0.0",
+	"description": "A simple authentication app using Postgres, Express, React, Nodejs",
+	"main": "server.js",
+	"scripts": {
+		"start": "nodemon cd server/ server.js",
+		"test": "test"
+	},
+	"keywords": [
+		"Authentication",
+		"React",
+		"Nodejs",
+		"Passport"
+	],
+	"author": "Svavar Pall Gudgeirsson",
+	"license": "ISC",
+	"dependencies": {
+		"concurrently": "^5.1.0"
+	}
+}
