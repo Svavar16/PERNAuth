@@ -4,7 +4,8 @@
 	"description": "A simple authentication app using Postgres, Express, React, Nodejs",
 	"main": "server.js",
 	"scripts": {
-		"start": "nodemon cd server/ server.js",
+		"startServer": "nodemon server/server.js",
+		"dev": "concurrently -n server,client -c green,white -p time -t HH:mm:ss \"cd server && npm start\" \"cd client && npm start\"",
 		"test": "test"
 	},
 	"keywords": [
