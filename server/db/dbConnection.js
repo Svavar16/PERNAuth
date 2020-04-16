@@ -3,9 +3,9 @@ import postgres from "postgres";
 
 const sql = postgres(process.env.DATABASEURL, {
 	port: process.env.POSTGRESQLPORT,
-	username: process.env.POSTGRESQLUSER,
+	database: process.env.pernauth,
+	username: process.env.postgres,
 	password: process.env.POSTGRESQLPASSWORD,
-	database: process.env.POSTGRESQLUSERDATABASENAME,
 });
 
 console.log("> Connected To postgreSQL");
