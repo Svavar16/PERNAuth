@@ -2,26 +2,23 @@ import { userModel } from "../db/databaseCommands";
 import helper from "../Middleware/helper";
 
 export default (app) => {
-	app.get("/userRegister", async (req, res) => {
-		res.send("From register");
-	});
-
+	// should register the user, just created the user object in the database,
+	//  with bcrypt from helper that hashes the password
 	app.post("/userRegister", async (req, res) => {
 		try {
 			const { username, role } = req.body;
-			const password = helper.setPassword(req.body.password);
+			const hashedPassword = helper.setPassword(req.body.password);
 			const user = {
-				username,
-				password,
-				role,
+				username: username,
+				password: hashedPassword,
+				role: role,
 			};
 			const createdUser = await userModel.create(user);
 			if (createdUser) {
-				res.status(200).end();
-			} else {
-				res.status(500).end();
+				res.status(200).send(createdUser);
 			}
 		} catch (error) {
+			console.log(error);
 			res.status(500).end();
 		}
 	});

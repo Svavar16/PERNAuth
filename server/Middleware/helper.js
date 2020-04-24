@@ -1,10 +1,11 @@
+require("dotenv").config();
 import bcrypt from "bcrypt";
+import Jwt from "jsonwebtoken";
 
 const helper = {
 	// encrypt the new password
 	setPassword(password) {
-		const salt = bcrypt.genSaltSync(12);
-		return bcrypt.hashSync(password, salt);
+		return bcrypt.hashSync(password, bcrypt.genSaltSync(12));
 	},
 
 	// compare the password, if they are a match, it return true, else false
@@ -12,9 +13,12 @@ const helper = {
 		return bcrypt.compareSync(password, userPassword);
 	},
 
-	// a function to create a JWT
-	createWebToken(user) {
-		return 0;
+	// a function to create a JWT token
+	createJwtToken(payload) {
+		const token = Jwt.sign({ id: payload.id }, process.env.JWTSESSIONKEY, {
+			expiresIn: "7d",
+		});
+		return token;
 	},
 };
 
