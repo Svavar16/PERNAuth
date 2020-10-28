@@ -1,7 +1,6 @@
 require("dotenv").config();
 import express from "express";
 import cors from "express-cors";
-import session from "express-session";
 import passport from "passport";
 // importing to activate the database.
 import db from "./db/dbConnection";
@@ -18,41 +17,27 @@ const PORT = process.env.PORT || 4001;
 // getting the express app.
 const app = express();
 
-// this will allow us to bypass the cors policy, since it requires preflight too send that to send to the backend.
+// this is needed for cors, dont know why, works without this on my other apps
 app.use(function (req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Methods", "*");
+	res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
 	res.header(
 		"Access-Control-Allow-Headers",
-		"Origin, X-Requested-With, Content-Type, Accept, Authorization"
+		"Origin, X-Requested-With, Content-Type, Accept"
 	);
 	next();
 });
 
-// have it use various opjects that we will use in the application
 // starting with cors, that will allow us it with react
-app.options("*", cors());
+app.use(cors());
 // the middleware that will allow use to get the information
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// to store the user session
-app.use(
-	session({
-		secret: process.env.SESSIONSECRET,
-		resave: false,
-		saveUninitialized: false,
-	})
-);
-
+// this will start with checking passport
 app.use(passport.initialize());
-
+// this is telling it where the strategy is
 require("./Middleware/passport")(passport);
 
-// the main page.
-app.get("/", function (req, res) {
-	res.send("Welcome to the Express server");
-});
-
+// the methods
 userRegister(app);
 
 userLogin(app);

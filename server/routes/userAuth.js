@@ -7,7 +7,7 @@ import passport from "passport";
  */
 export default (app) => {
 	app.post(
-		"/userAuth",
+		"/api/userAuth",
 		passport.authenticate("jwt", { session: false }),
 		(req, res) => {
 			res.status(200).send(req.user[0]);
